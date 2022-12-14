@@ -17,7 +17,14 @@ const renderUsers = async () => {
   });
 };
 
-const app = () => renderUsers();
+const app = () => {
+  const config = (window as any).__CONFIG__;
+  delete (window as any).__CONFIG__;
+
+  ioc.register('apiConfig', config.api);
+
+  renderUsers();
+};
 
 window.onload = (event: Event) => {
   const logger: ILogger = ioc.resolve('logger');
